@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenAI Art - Pavlos Andreadis</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        /* Animated Background */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #16213e 100%);
+            overflow: hidden;
+        }
+        
+        .velvet-sky {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('../assets/img/image_1383.png') center center/cover no-repeat;
+            opacity: 0.15;
+            filter: brightness(0.3) contrast(1.5) blur(2px);
+        }
+        
+        .stars-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: starContainerMove 80s linear infinite;
+        }
+        
+        .red-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .red-line svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .red-line path {
+            stroke: #ff4444;
+            stroke-width: 0.1;
+            fill: none;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 4s linear forwards;
+        }
+        
+        @keyframes drawLine {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+        
+        @keyframes starContainerMove {
+            0% {
+                transform: translateX(0px) translateY(0px);
+            }
+            25% {
+                transform: translateX(-30px) translateY(-15px);
+            }
+            50% {
+                transform: translateX(-60px) translateY(-30px);
+            }
+            75% {
+                transform: translateX(-90px) translateY(-45px);
+            }
+            100% {
+                transform: translateX(-120px) translateY(-60px);
+            }
+        }
+        
+        .star.small {
+            width: 2px;
+            height: 2px;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+            animation: twinkle 1.5s infinite alternate;
+        }
+        
+        .star.medium {
+            width: 3px;
+            height: 3px;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
+            animation: twinkle 2s infinite alternate;
+        }
+        
+        .star.large {
+            width: 4px;
+            height: 4px;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 1);
+            animation: twinkle 2.5s infinite alternate;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+        
+
+        
+        /* Ensure content stays above background */
+        body {
+            position: relative;
+            z-index: 1;
+        }
+        
+        main {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .gallery-container {
+            max-width: none;
+            margin: 0;
+            padding: 0 1rem;
+        }
+        
+        /* Top Header Banner */
+        .event-header {
+            position: relative;
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2.5rem 0;
+            background: url('../assets/img/ai-art-bg.png') center center/cover no-repeat;
+            color: white;
+            border-radius: 16px;
+            margin-top: 2rem;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+        }
+        .event-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(102,126,234,0.7) 0%, rgba(118,75,162,0.7) 100%);
+            z-index: 0;
+        }
+        .event-header > * {
+            position: relative;
+            z-index: 1;
+        }
+        .event-header h1, .event-header .subtitle {
+            text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+        }
+        
+        .event-header h1 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 2.8rem;
+        }
+        
+        .event-header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 300px);
+            column-gap: 2.5rem;
+            row-gap: 2rem;
+            margin-top: 2rem;
+            padding-left: 2.5rem;
+        }
+        
+        .gallery-item {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .gallery-item .caption {
+            padding: 1rem;
+            background: #fff;
+        }
+        
+        .gallery-item .caption h3 {
+            margin: 0 0 0.5rem 0;
+            color: #222;
+            font-size: 1.1rem;
+        }
+        
+        .gallery-item .caption p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .page-header h1 {
+            color: #222;
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .placeholder-message {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        
+        .placeholder-message h3 {
+            color: #222;
+            margin-bottom: 1rem;
+        }
+        
+        /* Lightbox styles */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 800px;
+            text-align: center;
+        }
+        
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .lightbox-caption {
+            margin-top: 2rem;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .lightbox-caption h3 {
+            margin: 0 0 0.5rem 0;
+            color: white;
+            font-size: 1.8rem;
+        }
+        
+        .lightbox-caption p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+            font-size: 1.1rem;
+        }
+        
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+        }
+        
+        .close:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+            
+            .gallery-container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-background">
+                <div class="velvet-sky"></div>
+        <div class="stars-container" id="starsContainer"></div>
+        <div class="red-line" id="redLine"></div>
+    </div>
+    
+    <header>
+        <nav class="top-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="aist.html">AI & Storytelling</a></li>
+                <li><a href="genai.html">GenAI in Education</a></li>
+                <li><a href="genaiart.html" class="active">GenAI Art</a></li>
+                <li><a href="ai-art-exhibition.html">AI Can't Sing</a></li>
+                <li><a href="lerobot-hackathon.html">LeRobot Hackathon</a></li>
+                <li><a href="spel.html">SPEL</a></li>
+                <li><a href="teachathon.html">Teachathon</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Top Header Banner -->
+    <div class="event-header">
+        <h1>GenAI Art Gallery</h1>
+        <div class="subtitle">Exploring the intersection of artificial intelligence and creative expression</div>
+    </div>
+    
+    <main>
+        <div class="gallery-container">
+            
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Images will be loaded dynamically from the genaiimage folder -->
+            </div>
+        </div>
+    </main>
+    
+    <!-- Bottom Banner -->
+    <div class="bottom-banner">
+        <div class="banner-content">
+            <h2>-</h2>
+            <p>..</p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Pavlos Andreadis. All rights reserved.</p>
+    </footer>
+    
+    <script src="assets/js/scripts.js"></script>
+    <script>
+        console.log('Inline script is loading...');
+        
+        // Lightbox functionality
+        function openLightbox(imageSrc, title, description) {
+            // Hide the gallery and other elements
+            const gallery = document.querySelector('.gallery-container');
+            const header = document.querySelector('.event-header');
+            const bottomBanner = document.querySelector('.bottom-banner');
+            const footer = document.querySelector('footer');
+            if (gallery) gallery.style.display = 'none';
+            if (header) header.style.display = 'none';
+            if (bottomBanner) bottomBanner.style.display = 'none';
+            if (footer) footer.style.display = 'none';
+            
+            // Create the lightbox view
+            const lightbox = document.createElement('div');
+            lightbox.className = 'lightbox';
+            lightbox.innerHTML = `
+                <div class="lightbox-content">
+                    <span class="close">&times;</span>
+                    <img src="${imageSrc}" alt="${title}">
+                </div>
+            `;
+            
+            document.body.appendChild(lightbox);
+            
+            // Close lightbox functionality
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox || e.target.classList.contains('close')) {
+                    document.body.removeChild(lightbox);
+                    // Show the gallery and other elements again
+                    if (gallery) gallery.style.display = 'block';
+                    if (header) header.style.display = 'block';
+                    if (bottomBanner) bottomBanner.style.display = 'block';
+                    if (footer) footer.style.display = 'block';
+                }
+            });
+            
+            // Close on escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (document.body.contains(lightbox)) {
+                        document.body.removeChild(lightbox);
+                        // Show the gallery and other elements again
+                        if (gallery) gallery.style.display = 'block';
+                        if (header) header.style.display = 'block';
+                        if (bottomBanner) bottomBanner.style.display = 'block';
+                        if (footer) footer.style.display = 'block';
+                    }
+                }
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM is loaded!');
+            
+            const container = document.getElementById('galleryGrid');
+            console.log('Container:', container);
+            
+            if (container) {
+                // Add the images with proper styling and click handlers
+                const image1 = document.createElement('div');
+                image1.className = 'gallery-item';
+                image1.style.cursor = 'pointer';
+                image1.innerHTML = `
+                    <img src="assets/img/genaiimage/CastingShadows.png" alt="Casting Shadows" loading="lazy">
+                    <div class="caption">
+                        <h3>Casting Shadows</h3>
+                        <p>AI-generated artwork exploring light and shadow patterns.</p>
+                    </div>
+                `;
+                image1.addEventListener('click', () => {
+                    openLightbox('../assets/img/genaiimage/CastingShadows.png', 'Casting Shadows', 'AI-generated artwork exploring light and shadow patterns.');
+                });
+                container.appendChild(image1);
+                
+                const image2 = document.createElement('div');
+                image2.className = 'gallery-item';
+                image2.style.cursor = 'pointer';
+                image2.innerHTML = `
+                    <img src="assets/img/genaiimage/Image 42.jpg" alt="AI Generated Image 42" loading="lazy">
+                    <div class="caption">
+                        <h3>AI Generated Image 42</h3>
+                        <p>A creative piece generated using artificial intelligence techniques.</p>
+                    </div>
+                `;
+                image2.addEventListener('click', () => {
+                    openLightbox('../assets/img/genaiimage/Image 42.jpg', 'AI Generated Image 42', 'A creative piece generated using artificial intelligence techniques.');
+                });
+                container.appendChild(image2);
+                
+                console.log('Images added with lightbox functionality!');
+            } else {
+                console.log('Container not found!');
+            }
+        });
+        
+        // Star animation
+        class StarField {
+            constructor() {
+                this.starsContainer = document.getElementById('starsContainer');
+                this.redLine = document.getElementById('redLine');
+                this.stars = [];
+                this.starPositions = [];
+                this.maxStars = 50;
+                this.starSpeed = 80; // seconds - easily tunable
+                this.lineUpdateInterval = 3000; // Update line every 3 seconds
+                
+                this.init();
+            }
+            
+            init() {
+                this.createStars();
+                this.createRedLine();
+                this.startLineUpdates();
+            }
+            
+            createStars() {
+                for (let i = 0; i < this.maxStars; i++) {
+                    const star = document.createElement('div');
+                    const size = Math.random() > 0.7 ? 'large' : Math.random() > 0.4 ? 'medium' : 'small';
+                    star.className = `star ${size}`;
+                    
+                    // Distribute stars across the screen horizontally
+                    const startX = Math.random() * window.innerWidth;
+                    const startY = Math.random() * window.innerHeight;
+                    
+                    star.style.left = startX + 'px';
+                    star.style.top = startY + 'px';
+                    star.style.animationDuration = this.starSpeed + 's';
+                    
+                    this.starsContainer.appendChild(star);
+                    this.stars.push(star);
+                    this.starPositions.push({ x: startX, y: startY });
+                }
+            }
+            
+            createRedLine() {
+                this.updateRedLine();
+            }
+            
+            updateRedLine() {
+                // Clear existing line
+                this.redLine.innerHTML = '';
+                
+                // Create SVG
+                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.setAttribute('viewBox', '0 0 100 100');
+                svg.setAttribute('preserveAspectRatio', 'none');
+                
+                // Get current star positions
+                this.updateStarPositions();
+                
+                // Create path connecting random stars
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', this.generateRandomPath());
+                
+                svg.appendChild(path);
+                this.redLine.appendChild(svg);
+            }
+            
+            updateStarPositions() {
+                this.stars.forEach((star, index) => {
+                    const rect = star.getBoundingClientRect();
+                    this.starPositions[index] = {
+                        x: rect.left + rect.width / 2,
+                        y: rect.top + rect.height / 2
+                    };
+                });
+            }
+            
+            generateRandomPath() {
+                if (this.starPositions.length < 2) return '';
+                
+                // Select 4-6 random stars to connect
+                const numConnections = Math.min(6, Math.max(4, Math.floor(Math.random() * 3) + 4));
+                const selectedStars = [];
+                
+                // Get random unique stars
+                while (selectedStars.length < numConnections) {
+                    const randomIndex = Math.floor(Math.random() * this.starPositions.length);
+                    if (!selectedStars.includes(randomIndex)) {
+                        selectedStars.push(randomIndex);
+                    }
+                }
+                
+                // Convert to viewport coordinates (0-100)
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                
+                let pathData = '';
+                selectedStars.forEach((starIndex, i) => {
+                    const star = this.starPositions[starIndex];
+                    const x = (star.x / viewportWidth) * 100;
+                    const y = (star.y / viewportHeight) * 100;
+                    
+                    if (i === 0) {
+                        pathData += `M ${x},${y} `;
+                    } else {
+                        pathData += `L ${x},${y} `;
+                    }
+                });
+                
+                return pathData;
+            }
+            
+            startLineUpdates() {
+                this.updateRedLine();
+                
+                setInterval(() => {
+                    this.updateRedLine();
+                }, 4000); // Match the animation duration
+            }
+        }
+        
+        // Initialize star field when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new StarField();
+        });
+    </script>
+</body>
+</html> 

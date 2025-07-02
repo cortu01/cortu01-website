@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenAI in Education - Pavlos Andreadis</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        .project-box {
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+            border-left: 5px solid #667eea;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.1);
+        }
+        
+        .project-box h2 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+        }
+        
+        .project-box h3 {
+            color: #667eea;
+            margin: 1.5rem 0 0.5rem 0;
+            font-size: 1.2rem;
+        }
+        
+        .project-box p {
+            margin: 0.5rem 0;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .project-box ul {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            color: #555;
+        }
+        
+        .project-box li {
+            margin: 0.3rem 0;
+            line-height: 1.5;
+        }
+        
+        .highlight-text {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .contact-info {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border: 1px solid #e8eaff;
+        }
+        
+        .page-nav {
+            background: linear-gradient(135deg, rgba(48, 168, 156, 0.8) 0%, rgba(76, 94, 175, 0.8) 50%, rgba(88, 56, 121, 0.8) 100%);
+            padding: 0.5rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-nav::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -75%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.06) 0%, transparent 50%),
+                        radial-gradient(circle at 75% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 50% 60%, rgba(255, 255, 255, 0.04) 0%, transparent 50%);
+            animation: swirl 8s ease-in-out infinite;
+            z-index: 0;
+        }
+        
+        .page-nav::after {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -30%;
+            width: 160%;
+            height: 160%;
+            background: radial-gradient(circle at 60% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 20% 70%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+            animation: swirl 12s ease-in-out infinite reverse;
+            z-index: 0;
+        }
+        
+        .page-nav .rectangles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .page-nav .rectangles::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            width: 30px;
+            height: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            transform: rotate(45deg);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .page-nav .rectangles::after {
+            content: '';
+            position: absolute;
+            bottom: 30%;
+            right: 15%;
+            width: 25px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.25);
+            transform: rotate(-30deg);
+            animation: float 8s ease-in-out infinite reverse;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(45deg);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translateY(-8px) rotate(50deg);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateY(-15px) rotate(40deg);
+                opacity: 0.2;
+            }
+            75% {
+                transform: translateY(-5px) rotate(55deg);
+                opacity: 0.4;
+            }
+        }
+        
+        @keyframes swirl {
+            0%, 100% {
+                transform: rotate(0deg) scale(1);
+            }
+            25% {
+                transform: rotate(90deg) scale(1.1);
+            }
+            50% {
+                transform: rotate(180deg) scale(0.9);
+            }
+            75% {
+                transform: rotate(270deg) scale(1.05);
+            }
+        }
+        
+        .page-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: flex-start;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .page-nav li {
+            margin: 0;
+        }
+        
+        .page-nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.6), 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        
+        .page-nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        @media (max-width: 768px) {
+            .page-nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="top-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="aist.html">AI & Storytelling</a></li>
+                <li><a href="genai.html" class="active">GenAI in Education</a></li>
+                <li><a href="genaiart.html">GenAI Art</a></li>
+                <li><a href="ai-art-exhibition.html">AI Can't Sing</a></li>
+                <li><a href="lerobot-hackathon.html">LeRobot Hackathon</a></li>
+                <li><a href="spel.html">SPEL</a></li>
+                <li><a href="teachathon.html">Teachathon</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>GenAI in Education</h1>
+        <p>Insights, projects, and resources on the use of Generative AI in educational contexts will be shared here.</p>
+        
+        <nav class="page-nav">
+            <div class="rectangles"></div>
+            <ul>
+                <li><a href="#ptas-project">🔬 PTAS Project</a></li>
+                <li><a href="#ukicer-2025">🎓 UKICER 2025</a></li>
+            </ul>
+        </nav>
+        
+        <div class="project-box" id="ptas-project">
+            <h2>🔬 PTAS-Funded Project: GenAI Integration in Computer Science Education</h2>
+            <p><strong>Principal Investigator:</strong> Pavlos Andreadis</p>
+            <p><strong>Team:</strong> Aurora Constantin, Cristina Adriana Alexandru, Fiona Mcneill, Heather Yorston, Judy Robertson, Stuart King, Vidminas Vizgirda; and Anya Habana, Aagoon Chakraborty, Kashvi Chabbra</p>
+            <p><strong>Institution:</strong> School of Informatics, Computer Science Education Group</p>
+            <p><strong>Funding:</strong> Principal's Teaching Award Scheme</p>
+            
+            <h3>Project Motivation</h3>
+            <p>Following the lessons learned from Covid-19 (students needed access to learning materials) and the emergence of ChatGPT (students need learning, not test prep), this project addresses the fundamental shift in how students think, search, and problem-solve with GenAI.</p>
+            
+            <h3>Research Goals</h3>
+            <ul>
+                <li>Understand faculty and student perceptions of GenAI integration</li>
+                <li>Document current approaches to GenAI in Computer Science teaching</li>
+                <li>Identify challenges and barriers to effective integration</li>
+                <li>Develop evidence-based recommendations for educational practice</li>
+            </ul>
+            
+            <h3>Research Methodology</h3>
+            <p><strong>Survey Participants:</strong></p>
+            <ul>
+                <li><span class="highlight-text">230 Students:</span> 55% male, 36% female, 3% non-binary/third, 6% prefer not to say</li>
+                <li><span class="highlight-text">52 Academic Staff:</span> 50% male, 27% female, 8% non-binary/third, 15% prefer not to say</li>
+                <li><span class="highlight-text">Focus Groups:</span> 12 Students, 5 Academic Staff</li>
+            </ul>
+            
+            <h3>Key Findings</h3>
+            <ul>
+                <li><strong>Outlawing GenAI is pointless</strong> – students will adapt around bans</li>
+                <li><strong>Traditional "final-answer" assessment is obsolete</strong> – focus on process</li>
+                <li><strong>Make students work with/against GenAI</strong> – don't ignore or fear it</li>
+                <li><strong>Teach prompt engineering and critical AI use</strong> – not just memorization</li>
+                <li><strong>GenAI can support fundamentals</strong> – use it to teach and assess real skills</li>
+                <li><strong>AI detectors don't work</strong> – don't rely on them</li>
+                <li><strong>Exams instead of coursework is only a temporary crutch</strong> – don't miss the bigger opportunity</li>
+            </ul>
+            
+            <h3>Recommendations</h3>
+            <ul>
+                <li><strong>Lecturers:</strong> Start small – experiment with redesigning one assessment</li>
+                <li><strong>Administration:</strong> Invest in real assessment redesign – this isn't a minor patch</li>
+                <li>Get clear on what students should learn and do with GenAI</li>
+                <li>Some domains will need GenAI-specific curricula</li>
+                <li>Leverage GenAI to enhance teaching and assessment</li>
+                <li>The world has changed – our assessment and teaching must change with it</li>
+            </ul>
+            
+            <div class="contact-info">
+                <p><strong>Contact:</strong> Pavlos Andreadis</p>
+                <p><strong>Email:</strong> <a href="mailto:pavlos.andreadis@ed.ac.uk">pavlos.andreadis@ed.ac.uk</a></p>
+            </div>
+        </div>
+        
+        <div class="project-box" id="ukicer-2025">
+            <h2>🎓 UKICER 2025 - Conference Organization & Workshop Presentation</h2>
+            <p><strong>Conference:</strong> <a href="https://www.ukicer.com" target="_blank">UK and Ireland Computing Education Research (UKICER) 2025</a></p>
+            <p><strong>Dates:</strong> September 4-5, 2025</p>
+            <p><strong>Location:</strong> Edinburgh, UK</p>
+            
+            <h3>Organizational Role</h3>
+            <p>I am helping organize UKICER 2025 as part of the Local Organising Committee. My main responsibilities include:</p>
+            <ul>
+                <li><strong>Website Maintenance:</strong> Maintaining and updating the conference website</li>
+                <li><strong>On-site Administration:</strong> Managing logistics and coordination during the conference</li>
+                <li><strong>GenAI Workshop:</strong> Building, organizing, and delivering an organizer workshop on GenAI in Education</li>
+            </ul>
+            
+            <h3>Workshop Presentation</h3>
+            <p>I am excited to be presenting a further GenAI workshop alongside Jake Van Clief, focusing on practical applications of generative AI in educational contexts. This workshop will explore innovative approaches to integrating AI tools in computer science education.</p>
+            
+            <h3>Conference Overview</h3>
+            <p>UKICER is a leading forum for researchers and practitioners to meet and share advances in computer science education. The conference brings together researchers, academics, industry practitioners and teachers from across the UK and Ireland as well as from the rest of Europe and the wider world.</p>
+        </div>
+    </main>
+    
+    <!-- Bottom Banner -->
+    <div class="bottom-banner">
+        <div class="banner-content">
+            <h2>-</h2>
+            <p>..</p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Pavlos Andreadis. All rights reserved.</p>
+    </footer>
+    <script src="assets/js/scripts.js"></script>
+</body>
+</html> 

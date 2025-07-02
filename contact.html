@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Pavlos Andreadis</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="top-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="aist.html">AI & Storytelling</a></li>
+                <li><a href="genai.html">GenAI in Education</a></li>
+                <li><a href="genaiart.html">GenAI Art</a></li>
+                <li><a href="ai-art-exhibition.html">AI Can't Sing</a></li>
+                <li><a href="lerobot-hackathon.html">LeRobot Hackathon</a></li>
+                <li><a href="spel.html">SPEL</a></li>
+                <li><a href="teachathon.html">Teachathon</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Contact</h1>
+        <p><strong>Academic & Research:</strong> <a id="academic-email" href="#">Loading...</a></p>
+        <p><strong>Independent Consulting:</strong> <a id="consulting-email" href="#">Loading...</a></p>
+    </main>
+    
+    <!-- Bottom Banner -->
+    <div class="bottom-banner">
+        <div class="banner-content">
+            <h2>-</h2>
+            <p>..</p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Pavlos Andreadis. All rights reserved.</p>
+    </footer>
+    <script src="assets/js/scripts.js"></script>
+    <script>
+        // Email obfuscation - builds emails at runtime to prevent bot harvesting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Academic email
+            const academicParts = ['pavlos.andreadis', '@', 'ed.ac.uk'];
+            const academicEmail = academicParts.join('');
+            const academicLink = document.getElementById('academic-email');
+            academicLink.href = 'mailto:' + academicEmail;
+            academicLink.textContent = academicEmail;
+            
+            // Consulting email
+            const consultingParts = ['cortu01', '@', 'gmail.com'];
+            const consultingEmail = consultingParts.join('');
+            const consultingLink = document.getElementById('consulting-email');
+            consultingLink.href = 'mailto:' + consultingEmail;
+            consultingLink.textContent = consultingEmail;
+        });
+    </script>
+</body>
+</html>
