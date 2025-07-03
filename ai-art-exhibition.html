@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Can't Sing - Pavlos Andreadis</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="src/assets/css/styles.css">
     <style>
         .background-blur {
             position: fixed;
@@ -13,7 +13,7 @@
             width: 100vw;
             height: 100vh;
             z-index: 0;
-            background: url('../assets/img/ai-art-bg.png') center center/cover no-repeat;
+            background: url('../src/assets/img/ai-art-bg.png') center center/cover no-repeat;
             opacity: 0.35;
             filter: blur(10px) brightness(0.8);
             pointer-events: none;
@@ -36,7 +36,7 @@
             text-align: center;
             margin-bottom: 3rem;
             padding: 2rem 0;
-            background: url('../assets/img/PANO_20250628_202710.jpg') center center/cover no-repeat;
+            background: url('../src/assets/img/PANO_20250628_202710.jpg') center center/cover no-repeat;
             color: white;
             border-radius: 12px;
             margin-top: 2rem;
@@ -127,7 +127,7 @@
             color: #fff;
             text-align: center;
             padding: 2rem;
-            background: url('../assets/img/image_1383.png') center center/cover no-repeat;
+            background: url('../src/assets/img/image_1383.png') center center/cover no-repeat;
             border-radius: 8px;
             margin: 2rem 0;
             border-left: 4px solid #43EBFF;
@@ -406,7 +406,7 @@
         <p>&copy; 2025 Pavlos Andreadis. All rights reserved.</p>
     </footer>
     
-    <script src="assets/js/scripts.js"></script>
+    <script src="src/assets/js/scripts.js"></script>
     <script>
         // Auto-load images from the ai-art-exhibition folder
         const galleryContainer = document.getElementById('ai-art-gallery');
@@ -423,7 +423,7 @@
         async function loadAllImages() {
             try {
                 // Try to fetch a directory listing
-                const response = await fetch('../assets/img/ai-art-exhibition/');
+                const response = await fetch('../src/assets/img/ai-art-exhibition/');
                 if (response.ok) {
                     const html = await response.text();
                     
@@ -454,7 +454,7 @@
                         imageFiles.forEach((filename, index) => {
                             const galleryItem = document.createElement('div');
                             galleryItem.className = 'gallery-item';
-                            galleryItem.innerHTML = `<img src="assets/img/ai-art-exhibition/${filename}" alt="AI Art Exhibition">`;
+                            galleryItem.innerHTML = `<img src="src/assets/img/ai-art-exhibition/${filename}" alt="AI Art Exhibition">`;
                             
                             // Add click event for lightbox
                             galleryItem.addEventListener('click', () => {
@@ -483,7 +483,7 @@
         // Lightbox functions
         function openModal(index) {
             currentImageIndex = index;
-            modalImg.src = `../assets/img/ai-art-exhibition/${allImages[index]}`;
+            modalImg.src = `../src/assets/img/ai-art-exhibition/${allImages[index]}`;
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
@@ -495,12 +495,12 @@
         
         function showPrev() {
             currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
-            modalImg.src = `../assets/img/ai-art-exhibition/${allImages[currentImageIndex]}`;
+            modalImg.src = `../src/assets/img/ai-art-exhibition/${allImages[currentImageIndex]}`;
         }
         
         function showNext() {
             currentImageIndex = (currentImageIndex + 1) % allImages.length;
-            modalImg.src = `../assets/img/ai-art-exhibition/${allImages[currentImageIndex]}`;
+            modalImg.src = `../src/assets/img/ai-art-exhibition/${allImages[currentImageIndex]}`;
         }
         
         // Event listeners for modal
