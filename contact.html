@@ -32,8 +32,14 @@
     <!-- Bottom Banner -->
     <div class="bottom-banner">
         <div class="banner-content">
-            <h2>-</h2>
-            <p>..</p>
+            <h2 style="color: transparent;">-</h2>
+            <p style="color: transparent;">..</p>
+            <a href="#" onclick="showVideo(event)" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: block; cursor: pointer; width: 80%; height: 80%; mix-blend-mode: multiply;">
+                <img src="src/assets/img/pigeons_fly.png" alt="Pigeons Fly" style="transform: scale(1.6); width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; filter: contrast(1.2);">
+            </a>
+            <div id="videoContainer" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none; height: 90%;">
+                <iframe id="youtubeVideo" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
     
@@ -58,6 +64,23 @@
             consultingLink.href = 'mailto:' + consultingEmail;
             consultingLink.textContent = consultingEmail;
         });
+        
+        // Video display function
+        function showVideo(event) {
+            event.preventDefault();
+            const imageLink = event.currentTarget;
+            const videoContainer = document.getElementById('videoContainer');
+            const iframe = document.getElementById('youtubeVideo');
+            
+            // Hide the image
+            imageLink.style.display = 'none';
+            
+            // Show the video container
+            videoContainer.style.display = 'block';
+            
+            // Set the YouTube video URL with autoplay
+            iframe.src = 'https://www.youtube.com/embed/Z6H6oY11z5k?autoplay=1&si=wBdOJWTBzjUsls01';
+        }
     </script>
 </body>
 </html>

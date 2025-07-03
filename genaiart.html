@@ -397,6 +397,10 @@
     <script>
         console.log('Inline script is loading...');
         
+        // Easter egg sequence tracking
+        let easterEggSequence = [];
+        let easterEggTimeout;
+        
         // Lightbox functionality
         function openLightbox(imageSrc, title, description) {
             // Hide the gallery and other elements
@@ -458,8 +462,92 @@
                         if (footer) footer.style.display = 'block';
                     }
                 }
+                
+                // Easter egg trigger: Konami code + 'L'
+                easterEggSequence.push(e.key);
+                if (easterEggSequence.length > 20) {
+                    easterEggSequence = easterEggSequence.slice(-20);
+                }
+                
+                clearTimeout(easterEggTimeout);
+                easterEggTimeout = setTimeout(() => {
+                    easterEggSequence = [];
+                }, 3000);
+                
+                // Check for sequence
+                const sequenceString = easterEggSequence.join('');
+                const pattern = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'].join('');
+                if (sequenceString.includes(pattern)) {
+                    showEasterEgg(lightbox);
+                    easterEggSequence = [];
+                }
+                
+                // Debug: log the sequence to see what's being captured
+                if (easterEggSequence.length > 0) {
+                    console.log('Current sequence:', sequenceString);
+                }
             });
         }
+        
+        // Easter egg display function
+        function showEasterEgg(lightbox) {
+            const chars = ['I', "'", 'l', 'l', ' ', 'k', 'e', 'e', 'p', ' ', 'b', 'u', 'i', 'l', 'd', 'i', 'n', 'g', ' ', 't', 'h', 'i', 'n', 'g', 's', ' ', 't', 'h', 'a', 't', ' ', 'l', 'i', 'g', 'h', 't', ' ', 'm', 'e', ' ', 'u', 'p', ',', '\n', 'l', 'e', 'a', 'v', 'e', ' ', 's', 'p', 'a', 'c', 'e', ' ', 'f', 'o', 'r', ' ', 't', 'h', 'o', 's', 'e', ' ', 'w', 'h', 'o', ' ', 'w', 'a', 'n', 't', ' ', 't', 'o', ' ', 's', 't', 'a', 'n', 'd', ' ', 'i', 'n', ' ', 't', 'h', 'a', 't', ' ', 'l', 'i', 'g', 'h', 't', ' ', 'w', 'i', 't', 'h', ' ', 'm', 'e', ',', '\n', 'a', 'n', 'd', ' ', 'a', 'c', 'c', 'e', 'p', 't', ' ', 'o', 'n', 'l', 'y', ' ', 'r', 'e', 'l', 'a', 't', 'i', 'o', 'n', 's', 'h', 'i', 'p', 's', ' ', 't', 'h', 'a', 't', ' ', 'r', 'e', 'c', 'i', 'p', 'r', 'o', 'c', 'a', 't', 'e', ' ', 't', 'h', 'e', ' ', 'r', 'e', 's', 'p', 'e', 'c', 't', ' ', 'I', ' ', 'o', 'f', 'f', 'e', 'r', '.'];
+            const quote = chars.join('');
+            
+            // Remove existing content
+            const lightboxContent = lightbox.querySelector('.lightbox-content');
+            lightboxContent.innerHTML = '';
+            
+            // Create text with fuzzy haze effect
+            const textContainer = document.createElement('div');
+            textContainer.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                z-index: 1001;
+                pointer-events: none;
+                width: 95vw;
+                line-height: 2.2;
+                color: white;
+                font-size: 32px;
+                font-weight: 300;
+                white-space: pre-line;
+                text-shadow: 
+                    0 0 10px rgba(255, 255, 255, 0.8),
+                    0 0 20px rgba(255, 255, 255, 0.6),
+                    0 0 30px rgba(255, 255, 255, 0.4),
+                    0 0 40px rgba(255, 255, 255, 0.2);
+                filter: blur(0.5px);
+                animation: textGlow 3s ease-in-out infinite alternate;
+            `;
+            
+            textContainer.textContent = quote;
+            lightboxContent.appendChild(textContainer);
+        }
+        
+        // Add CSS animation for text glow
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes textGlow {
+                0% {
+                    text-shadow: 
+                        0 0 10px rgba(255, 255, 255, 0.8),
+                        0 0 20px rgba(255, 255, 255, 0.6),
+                        0 0 30px rgba(255, 255, 255, 0.4),
+                        0 0 40px rgba(255, 255, 255, 0.2);
+                }
+                100% {
+                    text-shadow: 
+                        0 0 15px rgba(255, 255, 255, 1),
+                        0 0 25px rgba(255, 255, 255, 0.8),
+                        0 0 35px rgba(255, 255, 255, 0.6),
+                        0 0 45px rgba(255, 255, 255, 0.4);
+                }
+            }
+        `;
+        document.head.appendChild(style);
         
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM is loaded!');
