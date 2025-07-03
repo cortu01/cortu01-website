@@ -421,69 +421,54 @@
         let allImages = [];
         
         async function loadAllImages() {
-            try {
-                // Try to fetch a directory listing
-                const response = await fetch('../src/assets/img/ai-art-exhibition/');
-                if (response.ok) {
-                    const html = await response.text();
+                        // Image list generated automatically by Python script
+            const imageFiles = [
+                "IMG_20250628_202441_HHT.jpg",
+                "IMG_20250628_202459_HHT.jpg",
+                "Image 7.jpg",
+                "PANO_20250628_202710.jpg",
+                "WhatsApp Image 2025-06-28 at 19.06.14.jpeg",
+                "ai-art-bg.png",
+                "image_1383.png"
+            ];
+            
+            if (imageFiles.length > 0) {
+                // Remove loading message
+                const loadingMsg = galleryContainer.querySelector('div[style*="grid-column: 1 / -1"]');
+                if (loadingMsg) loadingMsg.remove();
+                
+                // Store all images for lightbox navigation
+                allImages = imageFiles;
+                
+                // Load all images
+                imageFiles.forEach((filename, index) => {
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'gallery-item';
+                    galleryItem.innerHTML = `<img src="src/assets/img/ai-art-exhibition/${filename}" alt="AI Art Exhibition">`;
                     
-                    // Parse the HTML to find image files
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const links = doc.querySelectorAll('a[href]');
-                    
-                    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.JPG', '.JPEG', '.PNG', '.GIF', '.WEBP'];
-                    const imageFiles = [];
-                    
-                    links.forEach(link => {
-                        const href = link.getAttribute('href');
-                        if (href && imageExtensions.some(ext => href.endsWith(ext))) {
-                            imageFiles.push(href);
-                        }
+                    // Add click event for lightbox
+                    galleryItem.addEventListener('click', () => {
+                        openModal(index);
                     });
                     
-                    if (imageFiles.length > 0) {
-                        // Remove loading message
-                        const loadingMsg = galleryContainer.querySelector('div[style*="grid-column: 1 / -1"]');
-                        if (loadingMsg) loadingMsg.remove();
-                        
-                        // Store all images for lightbox navigation
-                        allImages = imageFiles;
-                        
-                        // Load all images
-                        imageFiles.forEach((filename, index) => {
-                            const galleryItem = document.createElement('div');
-                            galleryItem.className = 'gallery-item';
-                            galleryItem.innerHTML = `<img src="src/assets/img/ai-art-exhibition/${filename}" alt="AI Art Exhibition">`;
-                            
-                            // Add click event for lightbox
-                            galleryItem.addEventListener('click', () => {
-                                openModal(index);
-                            });
-                            
-                            galleryContainer.appendChild(galleryItem);
-                        });
-                        return;
-                    }
-                }
-            } catch (error) {
-                console.log('Could not fetch directory listing:', error);
+                    galleryContainer.appendChild(galleryItem);
+                });
+            } else {
+                // Fallback: Show message if no images found
+                galleryContainer.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: #666;">
+                        <p>📸 No images found!</p>
+                        <p>Place images in <code>cortu01/src/assets/img/ai-art-exhibition/</code></p>
+                        <p>Any image files (jpg, png, gif, webp) will be loaded automatically.</p>
+                    </div>
+                `;
             }
-            
-            // Fallback: Show message if no images found
-            galleryContainer.innerHTML = `
-                <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: #666;">
-                    <p>📸 No images found!</p>
-                    <p>Place images in <code>cortu01/src/assets/img/ai-art-exhibition/</code></p>
-                    <p>Any image files (jpg, png, gif, webp) will be loaded automatically.</p>
-                </div>
-            `;
         }
         
         // Lightbox functions
         function openModal(index) {
             currentImageIndex = index;
-            modalImg.src = `../src/assets/img/ai-art-exhibition/${allImages[index]}`;
+            modalImg.src = `src/assets/img/ai-art-exhibition/${allImages[index]}`;
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
@@ -495,12 +480,12 @@
         
         function showPrev() {
             currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
-            modalImg.src = `../src/assets/img/ai-art-exhibition/${allImages[currentImageIndex]}`;
+            modalImg.src = `src/assets/img/ai-art-exhibition/${allImages[currentImageIndex]}`;
         }
         
         function showNext() {
             currentImageIndex = (currentImageIndex + 1) % allImages.length;
-            modalImg.src = `../src/assets/img/ai-art-exhibition/${allImages[currentImageIndex]}`;
+            modalImg.src = `src/assets/img/ai-art-exhibition/${allImages[currentImageIndex]}`;
         }
         
         // Event listeners for modal
