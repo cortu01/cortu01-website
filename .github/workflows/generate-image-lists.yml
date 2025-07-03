@@ -31,4 +31,4 @@ jobs:
         git add src/assets/img/ai-art-exhibition/images.json
         git add src/assets/img/lerobot-hackathon/images.json
         git diff --quiet && git diff --staged --quiet || git commit -m "Auto-update image lists"
-        git push 
+        git push
