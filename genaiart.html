@@ -564,7 +564,7 @@
                     <img src="src/assets/img/genaiimage/CastingShadows.png" alt="Casting Shadows" loading="lazy">
                     <div class="caption">
                         <h3>Casting Shadows</h3>
-                        <p>AI-generated artwork exploring light and shadow patterns.</p>
+                        <p>AI co-generated artwork. GenAI -> Gimp + Stock Lighthouse Beam -> GenAI.</p>
                     </div>
                 `;
                 image1.addEventListener('click', () => {
@@ -586,6 +586,21 @@
                     openLightbox('../src/assets/img/genaiimage/Image 42.jpg', 'AI Generated Image 42', 'A creative piece generated using artificial intelligence techniques.');
                 });
                 container.appendChild(image2);
+                
+                const image3 = document.createElement('div');
+                image3.className = 'gallery-item';
+                image3.style.cursor = 'pointer';
+                image3.innerHTML = `
+                    <img src="src/assets/img/genaiimage/UKICER-2025.png" alt="UKICER 2025" loading="lazy">
+                    <div class="caption">
+                        <h3>UKICER 2025</h3>
+                        <p>UKICER 2025 banner. Logos, Image -> Gimp + GenAI, repeat. From Spring Autumn, then Spring again.</p>
+                    </div>
+                `;
+                image3.addEventListener('click', () => {
+                    openLightbox('../src/assets/img/genaiimage/UKICER-2025.png', 'UKICER 2025', 'AI-generated artwork for the UKICER 2025 conference.');
+                });
+                container.appendChild(image3);
                 
                 console.log('Images added with lightbox functionality!');
             } else {
