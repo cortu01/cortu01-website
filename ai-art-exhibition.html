@@ -391,14 +391,46 @@
                 
                 <p>Whether you're an artist, technologist, researcher, or simply curious about the future of creative AI, there are many ways to get involved in this exciting movement.</p>
             </div>
+            
+
         </div>
     </main>
     
     <!-- Bottom Banner -->
     <div class="bottom-banner">
         <div class="banner-content">
-            <h2>-</h2>
-            <p>..</p>
+            <h2 style="color: transparent;">-</h2>
+            <p style="color: transparent;">..</p>
+            
+            <!-- 3 Birds in a Row - Left -->
+            <a href="#" onclick="showVideo(event, '7ew1tsek108', 'left')" style="position: absolute; top: 50%; left: 25%; transform: translate(-50%, -50%); display: block; cursor: pointer; width: 20%; height: 80%; mix-blend-mode: multiply;">
+                <img src="src/assets/img/ai-art-exhibition/image_1468.png" alt="AI Art Exhibition" style="width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; filter: contrast(1.2);">
+            </a>
+            
+            <!-- 3 Birds in a Row - Center -->
+            <a href="#" onclick="showVideo(event, '0FJoAmrR_-4', 'center')" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: block; cursor: pointer; width: 20%; height: 80%; mix-blend-mode: multiply;">
+                <img src="src/assets/img/ai-art-exhibition/image_1469.png" alt="AI Art Exhibition" style="width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; filter: contrast(1.2);">
+            </a>
+            
+            <!-- 3 Birds in a Row - Right -->
+            <a href="#" onclick="showVideo(event, 'bZ05j8ziFrQ', 'right')" style="position: absolute; top: 50%; left: 75%; transform: translate(-50%, -50%); display: block; cursor: pointer; width: 20%; height: 80%; mix-blend-mode: multiply;">
+                <img src="src/assets/img/ai-art-exhibition/image_1479.png" alt="AI Art Exhibition" style="width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; filter: contrast(1.2);">
+            </a>
+            
+            <!-- Video Container - Left -->
+            <div id="videoContainerLeft" style="position: absolute; top: 50%; left: 25%; transform: translate(-50%, -50%); display: none; height: 90%; width: 20%;">
+                <iframe id="youtubeVideoLeft" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+            </div>
+            
+            <!-- Video Container - Center -->
+            <div id="videoContainerCenter" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none; height: 90%; width: 20%;">
+                <iframe id="youtubeVideoCenter" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+            </div>
+            
+            <!-- Video Container - Right -->
+            <div id="videoContainerRight" style="position: absolute; top: 50%; left: 75%; transform: translate(-50%, -50%); display: none; height: 90%; width: 20%;">
+                <iframe id="youtubeVideoRight" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
     
@@ -421,7 +453,7 @@
         let allImages = [];
         
         async function loadAllImages() {
-                                                                                                // Image list generated automatically by Python script
+                                                                                                            // Image list generated automatically by Python script
             const imageFiles = [
                 "IMG_20250628_202441_HHT.jpg",
                 "IMG_20250628_202459_HHT.jpg",
@@ -544,6 +576,23 @@
         
         // Load images when page loads
         document.addEventListener('DOMContentLoaded', loadAllImages);
+        
+        // Video display function for multiple birds
+        function showVideo(event, videoId = 'Z6H6oY11z5k', position = 'center') {
+            event.preventDefault();
+            const imageLink = event.currentTarget;
+            const videoContainer = document.getElementById(`videoContainer${position.charAt(0).toUpperCase() + position.slice(1)}`);
+            const iframe = document.getElementById(`youtubeVideo${position.charAt(0).toUpperCase() + position.slice(1)}`);
+            
+            // Hide the image
+            imageLink.style.display = 'none';
+            
+            // Show the video container
+            videoContainer.style.display = 'block';
+            
+            // Set the YouTube video URL with autoplay
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&si=wBdOJWTBzjUsls01`;
+        }
     </script>
 </body>
 </html> 
