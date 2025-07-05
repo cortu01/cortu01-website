@@ -5,6 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pavlos Andreadis - Lecturer at the School of Informatics</title>
     <link rel="stylesheet" href="src/assets/css/styles.css">
+    <style>
+        @media (max-width: 768px) {
+            .home-container {
+                flex-direction: column !important;
+                text-align: center !important;
+                gap: 1.5rem !important;
+            }
+            
+            .profile-image {
+                width: 200px !important;
+                height: 200px !important;
+                margin: 0 auto !important;
+            }
+            
+            .content-section {
+                min-width: 100% !important;
+                text-align: center !important;
+            }
+            
+            .profile-links {
+                align-items: center !important;
+            }
+            
+            .profile-links > div {
+                justify-content: center !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -24,9 +52,9 @@
         </nav>
     </header>
     <main>
-        <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 2.5rem; margin-top: 2.5rem; margin-bottom: 2.5rem; justify-content: flex-start; text-align: left;">
-            <img src="src/assets/img/profile.jpeg" alt="Profile photo" style="width: 280px; height: 280px; object-fit: cover; object-position: center; border-radius: 50%; box-shadow: 0 4px 24px rgba(0,0,0,0.18); border: 5px solid #fff; background: #eee; flex-shrink: 0;">
-            <div style="flex: 1; min-width: 0;">
+        <div class="home-container" style="display: flex; flex-direction: row; align-items: flex-start; gap: 2.5rem; margin-top: 2.5rem; margin-bottom: 2.5rem; justify-content: flex-start; text-align: left; flex-wrap: wrap;">
+            <img class="profile-image" src="src/assets/img/profile.jpeg" alt="Profile photo" style="width: 280px; height: 280px; object-fit: cover; object-position: center; border-radius: 50%; box-shadow: 0 4px 24px rgba(0,0,0,0.18); border: 5px solid #fff; background: #eee; flex-shrink: 0; margin: 0 auto;">
+            <div class="content-section" style="flex: 1; min-width: 300px;">
                 <section class="profile">
                     <div class="profile-links" style="display: flex; flex-direction: column; gap: 0.5rem;">
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
