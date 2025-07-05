@@ -7,6 +7,54 @@
     <link rel="icon" type="image/png" sizes="16x16" href="src/assets/img/Lighthouse_16_16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="src/assets/img/Lighthouse_32_32.png">
     <link rel="stylesheet" href="src/assets/css/styles.css">
+    <style>
+        /* Responsive navigation */
+        @media (max-width: 1200px) {
+            .top-nav {
+                min-height: auto !important;
+                padding: 15px 0 !important;
+            }
+            
+            .top-nav ul {
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                gap: 10px !important;
+            }
+            
+            .top-nav li {
+                margin: 5px 8px !important;
+            }
+            
+            .search-item {
+                margin-left: 0 !important;
+                margin-top: 10px !important;
+                order: 999 !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .top-nav {
+                min-height: auto !important;
+                padding: 12px 0 !important;
+            }
+            
+            .top-nav ul {
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                gap: 8px !important;
+            }
+            
+            .top-nav li {
+                margin: 3px 6px !important;
+            }
+            
+            .search-item {
+                margin-left: 0 !important;
+                margin-top: 8px !important;
+                order: 999 !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -22,6 +70,15 @@
                 <li><a href="spel.html">SPEL</a></li>
                 <li><a href="teachathon.html" class="active">Teachathon</a></li>
                 <li><a href="contact.html">Contact</a></li>
+                <li class="search-item" style="margin-left: auto;">
+                    <div class="search-box" style="display: flex; align-items: center; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 6px 12px; border: 1px solid rgba(255,255,255,0.2);">
+                        <input type="text" id="searchInput" placeholder="Search..." style="border: none; outline: none; background: transparent; width: 100px; font-size: 13px; padding: 3px; color: white; color-scheme: dark;">
+                        <button onclick="performSearch()" style="background: rgba(255,255,255,0.2); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: 6px; font-size: 12px;">
+                            🔍
+                        </button>
+                    </div>
+                    <div id="searchResults" style="position: absolute; top: 100%; right: 0; background: white; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 300px; max-height: 400px; overflow-y: auto; display: none; margin-top: 5px; z-index: 1000;"></div>
+                </li>
             </ul>
         </nav>
     </header>
@@ -42,5 +99,329 @@
         <p>&copy; 2025 Pavlos Andreadis. All rights reserved.</p>
     </footer>
     <script src="src/assets/js/scripts.js"></script>
+    <script>
+        // Enhanced search functionality that searches through page content
+        const searchPages = [
+            { title: "Home", url: "index.html" },
+            { title: "About", url: "about.html" },
+            { title: "AI & Storytelling", url: "aist.html" },
+            { title: "GenAI in Education", url: "genai.html" },
+            { title: "GenAI Art", url: "genaiart.html" },
+            { title: "AI Can't Sing", url: "ai-art-exhibition.html" },
+            { title: "LeRobot Hackathon", url: "lerobot-hackathon.html" },
+            { title: "SPEL", url: "spel.html" },
+            { title: "Teachathon", url: "teachathon.html" },
+            { title: "Contact", url: "contact.html" }
+        ];
+
+        let searchIndex = [];
+
+        // Build search index by fetching page content
+        async function buildSearchIndex() {
+            searchIndex = [];
+            
+            for (const page of searchPages) {
+                try {
+                    const response = await fetch(page.url);
+                    const html = await response.text();
+                    
+                    // Create a temporary DOM element to parse the HTML
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    
+                    // Extract text content from main content areas
+                    const mainContent = doc.querySelector('main');
+                    const content = mainContent ? mainContent.textContent : '';
+                    
+                    // Extract headings with their IDs or generate IDs
+                    const headings = Array.from(doc.querySelectorAll('h1, h2, h3, h4, h5, h6'))
+                        .map((h, index) => {
+                            const text = h.textContent.trim();
+                            if (text.length > 0) {
+                                // Use existing ID or generate one
+                                let id = h.id;
+                                if (!id) {
+                                    id = `heading-${index}-${text.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+                                }
+                                return { text, id, element: h };
+                            }
+                            return null;
+                        })
+                        .filter(h => h !== null);
+                    
+                    // Extract paragraphs with their context
+                    const paragraphs = Array.from(doc.querySelectorAll('p'))
+                        .map((p, index) => {
+                            const text = p.textContent.trim();
+                            if (text.length > 20) {
+                                // Find the nearest heading for context
+                                let nearestHeading = '';
+                                let currentElement = p;
+                                while (currentElement && !nearestHeading) {
+                                    const prevHeading = currentElement.previousElementSibling;
+                                    if (prevHeading && /^h[1-6]$/i.test(prevHeading.tagName)) {
+                                        nearestHeading = prevHeading.textContent.trim();
+                                    }
+                                    currentElement = currentElement.parentElement;
+                                }
+                                
+                                return {
+                                    text,
+                                    nearestHeading,
+                                    element: p,
+                                    index
+                                };
+                            }
+                            return null;
+                        })
+                        .filter(p => p !== null);
+                    
+                    searchIndex.push({
+                        title: page.title,
+                        url: page.url,
+                        content: content.toLowerCase(),
+                        headings: headings,
+                        paragraphs: paragraphs.slice(0, 5) // Limit to first 5 paragraphs
+                    });
+                } catch (error) {
+                    console.log(`Could not fetch ${page.url}:`, error);
+                }
+            }
+        }
+
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const resultsContainer = document.getElementById('searchResults');
+            
+            if (query === '') {
+                resultsContainer.style.display = 'none';
+                return;
+            }
+
+            if (searchIndex.length === 0) {
+                resultsContainer.innerHTML = '<div style="padding: 15px; color: #666; text-align: center;">Building search index...</div>';
+                resultsContainer.style.display = 'block';
+                return;
+            }
+
+            const results = [];
+            const seenUrls = new Set(); // Track URLs to avoid duplicates
+            
+            searchIndex.forEach(item => {
+                // Search in title
+                if (item.title.toLowerCase().includes(query)) {
+                    const url = item.url;
+                    if (!seenUrls.has(url)) {
+                        results.push({
+                            title: item.title,
+                            url: url,
+                            context: item.title,
+                            type: 'title'
+                        });
+                        seenUrls.add(url);
+                    }
+                }
+                
+                // Search in headings
+                item.headings.forEach(heading => {
+                    if (heading.text.toLowerCase().includes(query)) {
+                        const url = `${item.url}#${heading.id}`;
+                        if (!seenUrls.has(url)) {
+                            results.push({
+                                title: item.title,
+                                url: url,
+                                context: heading.text,
+                                type: 'heading'
+                            });
+                            seenUrls.add(url);
+                        }
+                    }
+                });
+                
+                // Search in paragraphs
+                item.paragraphs.forEach(paragraph => {
+                    if (paragraph.text.toLowerCase().includes(query)) {
+                        const context = paragraph.nearestHeading || item.title;
+                        const anchorId = context.toLowerCase().replace(/[^a-z0-9]/g, '-');
+                        const url = `${item.url}#${anchorId}`;
+                        
+                        // Only add if we haven't seen this URL and the content is different enough
+                        if (!seenUrls.has(url)) {
+                            const contextText = paragraph.text.substring(0, 100) + '...';
+                            results.push({
+                                title: item.title,
+                                url: url,
+                                context: contextText,
+                                type: 'content'
+                            });
+                            seenUrls.add(url);
+                        }
+                    }
+                });
+            });
+
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<div style="padding: 15px; color: #666; text-align: center;">No results found</div>';
+            } else {
+                resultsContainer.innerHTML = results.slice(0, 8).map(result => `
+                    <a href="${result.url}" onclick="handleSearchResultClick(event, '${result.url}')" style="display: block; padding: 12px 15px; text-decoration: none; color: #333; border-bottom: 1px solid #f0f0f0; transition: background-color 0.2s;">
+                        <div style="font-weight: 600; margin-bottom: 4px;">${result.title}</div>
+                        <div style="font-size: 12px; color: #666;">${result.context}</div>
+                        <div style="font-size: 10px; color: #999; margin-top: 2px;">${result.type === 'heading' ? '📋 Section' : result.type === 'content' ? '📄 Content' : '🏠 Page'}</div>
+                    </a>
+                `).join('');
+            }
+            
+            resultsContainer.style.display = 'block';
+        }
+
+        // Search on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Hide results when clicking outside
+        document.addEventListener('click', function(e) {
+            const searchItem = document.querySelector('.search-item');
+            const resultsContainer = document.getElementById('searchResults');
+            
+            if (!searchItem.contains(e.target)) {
+                resultsContainer.style.display = 'none';
+            }
+        });
+
+        // Handle search result clicks
+        function handleSearchResultClick(event, url) {
+            event.preventDefault();
+            
+            // Hide search results
+            document.getElementById('searchResults').style.display = 'none';
+            
+            // Check if it's a same-page anchor
+            if (url.includes('#')) {
+                const [pageUrl, anchor] = url.split('#');
+                
+                // If it's the same page, scroll to the anchor
+                if (pageUrl === window.location.pathname || pageUrl === window.location.href.split('#')[0]) {
+                    const targetElement = document.getElementById(anchor);
+                    if (targetElement) {
+                        // Scroll to element with offset for better aesthetics
+                        const elementTop = targetElement.offsetTop;
+                        const offset = 80; // 80px offset from top
+                        window.scrollTo({
+                            top: elementTop - offset,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Add a brief highlight effect
+                        targetElement.style.backgroundColor = '#fff3cd';
+                        targetElement.style.transition = 'background-color 0.5s';
+                        setTimeout(() => {
+                            targetElement.style.backgroundColor = '';
+                        }, 2000);
+                    } else {
+                        // Try to find by text content
+                        const allElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, div');
+                        for (let element of allElements) {
+                            if (element.textContent.toLowerCase().includes(anchor.replace(/-/g, ' '))) {
+                                // Scroll to element with offset for better aesthetics
+                                const elementTop = element.offsetTop;
+                                const offset = 80; // 80px offset from top
+                                window.scrollTo({
+                                    top: elementTop - offset,
+                                    behavior: 'smooth'
+                                });
+                                
+                                // Add a brief highlight effect
+                                element.style.backgroundColor = '#fff3cd';
+                                element.style.transition = 'background-color 0.5s';
+                                setTimeout(() => {
+                                    element.style.backgroundColor = '';
+                                }, 2000);
+                                break;
+                            }
+                        }
+                    }
+                } else {
+                    // Navigate to different page
+                    window.location.href = url;
+                }
+            } else {
+                // Navigate to different page
+                window.location.href = url;
+            }
+        }
+
+        // Real-time search as you type
+        let searchTimeout;
+        document.getElementById('searchInput').addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(performSearch, 300);
+        });
+
+        // Build search index when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            buildSearchIndex();
+            
+            // Add IDs to all headings for anchor navigation
+            const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            headings.forEach((heading, index) => {
+                if (!heading.id) {
+                    const text = heading.textContent.trim();
+                    const id = `heading-${index}-${text.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+                    heading.id = id;
+                }
+            });
+            
+            // Handle anchor scrolling for search results
+            if (window.location.hash) {
+                setTimeout(() => {
+                    const targetId = window.location.hash.substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        // Scroll to element with offset for better aesthetics
+                        const elementTop = targetElement.offsetTop;
+                        const offset = 80; // 80px offset from top
+                        window.scrollTo({
+                            top: elementTop - offset,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Add a brief highlight effect
+                        targetElement.style.backgroundColor = '#fff3cd';
+                        targetElement.style.transition = 'background-color 0.5s';
+                        setTimeout(() => {
+                            targetElement.style.backgroundColor = '';
+                        }, 2000);
+                    } else {
+                        // If exact ID not found, try to find by text content
+                        const allElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, div');
+                        for (let element of allElements) {
+                            if (element.textContent.toLowerCase().includes(targetId.replace(/-/g, ' '))) {
+                                // Scroll to element with offset for better aesthetics
+                                const elementTop = element.offsetTop;
+                                const offset = 80; // 80px offset from top
+                                window.scrollTo({
+                                    top: elementTop - offset,
+                                    behavior: 'smooth'
+                                });
+                                
+                                // Add a brief highlight effect
+                                element.style.backgroundColor = '#fff3cd';
+                                element.style.transition = 'background-color 0.5s';
+                                setTimeout(() => {
+                                    element.style.backgroundColor = '';
+                                }, 2000);
+                                break;
+                            }
+                        }
+                    }
+                }, 500);
+            }
+        });
+    </script>
 </body>
 </html> 
