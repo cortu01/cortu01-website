@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is Agentic AI?</title>
+    <link rel="stylesheet" href="src/assets/css/styles.css">
+    <style>
+        .section-nav {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .section-nav a {
+            margin-right: 1.5rem;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .section-nav a:hover {
+            text-decoration: underline;
+        }
+        .citation {
+            font-size: 0.95em;
+            color: #555;
+        }
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin: 1.5rem 0 2rem 0;
+        }
+        .tech-list a {
+            background: #e9ecef;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .tech-list a:hover {
+            background: #d1e7fd;
+        }
+        .section {
+            margin-bottom: 2.5rem;
+        }
+        .section h2 {
+            margin-top: 2.5rem;
+        }
+        .citation-list {
+            font-size: 0.97em;
+            margin-top: 1.5rem;
+        }
+        .citation-list li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="top-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="aist.html">AI & Storytelling</a></li>
+                <li><a href="genai.html">GenAI in Education</a></li>
+                <li><a href="genaiart.html">GenAI Art</a></li>
+                <li><a href="ai-art-exhibition.html">AI Can't Sing</a></li>
+                <li><a href="lerobot-hackathon.html">LeRobot Hackathon</a></li>
+                <li><a href="spel.html">SPEL</a></li>
+                <li><a href="teachathon.html">Teachathon</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="agentic_ai.html" class="active">Agentic AI</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main style="max-width: 900px; margin: 0 auto; padding: 2.5rem 1rem 3rem 1rem;">
+        <h1 style="margin-bottom: 0.5rem;">What is Agentic AI?</h1>
+        <div class="section-nav">
+            <a href="#hype">Hype &amp; Lack of Clarity</a>
+            <a href="#traditional">Traditional Agent-Based Systems Theory</a>
+            <a href="#current-agents">Current Deployed AI Agents</a>
+            <a href="#meaning">Is Agentic AI Just AI Agents?</a>
+            <a href="#theory-vs-engineering">Theory vs. Engineering</a>
+            <a href="#technologies">Relevant Technologies</a>
+            <a href="#practical">Practical &amp; Design Considerations</a>
+            <a href="#citations">Citations</a>
+        </div>
+
+        <section class="section" id="hype">
+            <h2>Hype &amp; Lack of Clarity</h2>
+            <p>
+                The term <strong>"Agentic AI"</strong> has recently surged in popularity, often invoked in discussions about the next wave of artificial intelligence. Yet, despite the hype, there is a striking lack of clarity about what exactly "agentic" means in this context. Is it a new paradigm, a rebranding of old ideas, or simply a buzzword? The ambiguity is compounded by marketing, media, and even academic discourse, which frequently use "agentic" to refer to a wide range of systems, from simple chatbots to complex autonomous organizations. This page aims to cut through the noise and provide a grounded, critical overview.
+            </p>
+        </section>
+
+        <section class="section" id="traditional">
+            <h2>Traditional Agent-Based Systems Theory</h2>
+            <p>
+                Before "agentic AI" became a buzzword, the field of <strong>agent-based systems</strong> was well-established in computer science and artificial intelligence. In this tradition, an <em>agent</em> is typically defined as an entity that perceives its environment, reasons about it, and acts upon it to achieve goals <span class="citation">[1,2]</span>. Multi-agent systems (MAS) theory explores how collections of such agents interact, cooperate, or compete <span class="citation">[3]</span>.
+            </p>
+            <p>
+                Key concepts include:
+                <ul>
+                    <li><strong>Autonomy</strong>: Agents operate without direct intervention.</li>
+                    <li><strong>Reactivity</strong>: Agents perceive and respond to their environment.</li>
+                    <li><strong>Proactivity</strong>: Agents take initiative to achieve goals.</li>
+                    <li><strong>Social ability</strong>: Agents interact with other agents or humans.</li>
+                </ul>
+            </p>
+            <p>
+                Classic references include Wooldridge &amp; Jennings (1995) <span class="citation">[1]</span> and Russell &amp; Norvig (2021) <span class="citation">[2]</span>.
+            </p>
+        </section>
+
+        <section class="section" id="current-agents">
+            <h2>Current Deployed AI Agents</h2>
+            <p>
+                Today, "AI agents" are deployed in a wide variety of settings, from personal assistants (e.g., Siri, Alexa) to autonomous vehicles, trading bots, and large-scale multi-agent simulations. Some notable examples:
+            </p>
+            <ul>
+                <li><strong>Personal Assistants</strong>: Apple Siri, Amazon Alexa, Google Assistant</li>
+                <li><strong>Autonomous Vehicles</strong>: Waymo, Tesla Autopilot</li>
+                <li><strong>Game Agents</strong>: AlphaGo, OpenAI Five</li>
+                <li><strong>Robotic Process Automation (RPA)</strong>: UiPath, Blue Prism</li>
+                <li><strong>Trading Bots</strong>: Jane Street’s trading agents, crypto market makers (e.g., Wintermute, Uniswap v3 bots)</li>
+                <li><strong>Multi-Agent Simulations</strong>: Smart grid management, traffic simulation <span style="font-size:0.97em; color:#666;">(often used for real-world system management, but the agents operate within simulated environments)</span></li>
+                <li><strong>Large Language Model (LLM) Agents</strong>: Auto-GPT, BabyAGI, Devin</li>
+            </ul>
+            <p>
+                These systems vary widely in their autonomy, learning capabilities, and real-world impact. Some are tightly engineered for specific tasks, while others (like LLM-based agents) are more general and open-ended.
+            </p>
+        </section>
+
+        <section class="section" id="meaning">
+            <h2>Is Agentic AI Simply the Study of AI Agents?</h2>
+            <p>
+                Is "agentic AI" just a new name for the study of AI agents, or is there more to it? The answer is nuanced. While much of the current discussion around agentic AI draws on the language and concepts of agent-based systems, there is a growing sense that something new is happening:
+            </p>
+            <p>
+                <strong>Importantly, "Agentic AI" is often used to imply a shift toward increasing autonomy and goal-driven behavior across open-ended, real-world tasks—rather than simply executing scripted or pre-defined actions.</strong> In particular, "agentic" often implies a higher degree of goal-directedness, where systems are expected to pursue objectives with initiative and adaptivity.
+            </p>
+            <ul>
+                <li><strong>Scale &amp; Complexity</strong>: Modern agentic systems often operate at much larger scales and with more complex behaviors than traditional agents.</li>
+                <li><strong>Learning &amp; Adaptation</strong>: Many current agents leverage deep learning, reinforcement learning, and self-improving architectures.</li>
+                <li><strong>Emergent Properties</strong>: Interactions between agents (and with humans) can lead to emergent, unpredictable behaviors.</li>
+                <li><strong>Socio-technical Integration</strong>: Agentic AI is increasingly about integrating agents into broader social, economic, and technical systems.</li>
+            </ul>
+            <p>
+                For example, LLM "agents" typically wrap large language model API calls with planning, tool use, and reflection loops to mimic agency and pursue user-specified goals.
+            </p>
+            <p>
+                Thus, while agentic AI builds on agent-based theory, it also pushes into new territory, raising questions about autonomy, responsibility, and the boundaries between tool and collaborator.
+            </p>
+        </section>
+
+        <section class="section" id="theory-vs-engineering">
+            <h2>Theory vs. Engineering: The Practical Gap</h2>
+            <p>
+                Traditional agent-based systems theory provides a valuable foundation, but the engineering and design of real-world agentic AI systems is often far more involved. Practical considerations include:
+            </p>
+            <ul>
+                <li><strong>System integration</strong>: Connecting agents to sensors, APIs, and other software</li>
+                <li><strong>Scalability</strong>: Handling large numbers of agents and real-time data</li>
+                <li><strong>Robustness &amp; Safety</strong>: Ensuring agents behave reliably in unpredictable environments</li>
+                <li><strong>Human-in-the-loop</strong>: Designing for effective human-agent collaboration</li>
+                <li><strong>Ethics &amp; Governance</strong>: Addressing issues of control, transparency, and accountability</li>
+            </ul>
+            <p>
+                In practice, building agentic AI systems requires a blend of theory, engineering, and design thinking.
+            </p>
+        </section>
+
+        <section class="section" id="technologies">
+            <h2>Relevant Technologies</h2>
+            <div class="tech-list">
+                <a href="#llms">Large Language Models (LLMs)</a>
+                <a href="#rl">Reinforcement Learning</a>
+                <a href="#multi-agent">Multi-Agent Systems</a>
+                <a href="#rpa">Robotic Process Automation (RPA)</a>
+                <a href="#planning">Automated Planning</a>
+                <a href="#robotics">Robotics</a>
+                <a href="#api-integration">API Integration</a>
+                <a href="#orchestration">Agent Orchestration Frameworks</a>
+            </div>
+            <div id="llms">
+                <h3>Large Language Models (LLMs)</h3>
+                <p>LLMs like GPT-4, Claude, and Gemini are increasingly used as the "brains" of agentic systems, enabling flexible reasoning, planning, and communication <span class="citation">[4,5]</span>.</p>
+            </div>
+            <div id="rl">
+                <h3>Reinforcement Learning</h3>
+                <p>RL provides a framework for agents to learn from interaction with their environment, optimizing behavior through trial and error <span class="citation">[2,6]</span>.</p>
+            </div>
+            <div id="multi-agent">
+                <h3>Multi-Agent Systems</h3>
+                <p>MAS theory underpins much of agentic AI, focusing on coordination, negotiation, and emergent behavior among multiple agents <span class="citation">[3]</span>.</p>
+            </div>
+            <div id="rpa">
+                <h3>Robotic Process Automation (RPA)</h3>
+                <p>RPA tools automate repetitive business processes, often acting as software agents that interact with digital systems <span class="citation">[7]</span>.</p>
+            </div>
+            <div id="planning">
+                <h3>Automated Planning</h3>
+                <p>Planning algorithms enable agents to sequence actions to achieve goals, a core capability in both classical and modern agentic systems <span class="citation">[2]</span>.</p>
+            </div>
+            <div id="robotics">
+                <h3>Robotics</h3>
+                <p>Physical robots are embodied agents, requiring integration of perception, planning, and control <span class="citation">[2,8]</span>.</p>
+            </div>
+            <div id="api-integration">
+                <h3>API Integration</h3>
+                <p>Modern agents often rely on APIs to access data, perform actions, and connect with other systems <span class="citation">[9]</span>.</p>
+            </div>
+            <div id="orchestration">
+                <h3>Agent Orchestration Frameworks</h3>
+                <p>Frameworks like LangChain, CrewAI, <strong>AutoGen</strong>, and others help manage, coordinate, and scale agentic workflows <span class="citation">[10,11]</span>.</p>
+            </div>
+        </section>
+
+        <section class="section" id="practical">
+            <h2>Practical &amp; Design Considerations</h2>
+            <p>
+                Beyond high-level concepts, building and deploying agentic AI systems requires mastery of both technical and design skills. Key areas to learn and consider include:
+            </p>
+            <ul>
+                <li><strong>Programming Languages</strong>: Python, Go, JavaScript, C++</li>
+                <li><strong>Frameworks &amp; Libraries</strong>: Ray, LangChain, CrewAI, OpenAI Gym, ROS</li>
+                <li><strong>Cloud &amp; Infrastructure</strong>: Kubernetes, Docker, serverless platforms</li>
+                <li><strong>Data Engineering</strong>: Pipelines, ETL, real-time data processing</li>
+                <li><strong>Deployment</strong>: CI/CD, monitoring, scaling</li>
+                <li><strong>Security</strong>: Authentication, authorization, data privacy</li>
+                <li><strong>Design Decisions</strong>: Agent architecture, communication protocols, human-agent interface, fail-safes</li>
+            </ul>
+            <p>
+                The design and deployment of agentic AI is as much about engineering and systems thinking as it is about algorithms and theory.
+            </p>
+        </section>
+
+        <section class="section" id="citations">
+            <h2>Citations</h2>
+            <ol class="citation-list">
+                <li id="cite1">Wooldridge, M., &amp; Jennings, N. R. (1995). Intelligent agents: Theory and practice. <em>The Knowledge Engineering Review</em>, 10(2), 115-152.</li>
+                <li id="cite2">Russell, S., &amp; Norvig, P. (2021). <em>Artificial Intelligence: A Modern Approach</em> (4th ed.). Pearson.</li>
+                <li id="cite3">Weiss, G. (Ed.). (2013). <em>Multiagent Systems</em> (2nd ed.). MIT Press.</li>
+                <li id="cite4">OpenAI. (2023). GPT-4 Technical Report. <a href="https://cdn.openai.com/papers/gpt-4.pdf" target="_blank">[PDF]</a></li>
+                <li id="cite5">Bubeck, S., et al. (2023). Sparks of Artificial General Intelligence: Early experiments with GPT-4. <em>arXiv:2303.12712</em>.</li>
+                <li id="cite6">Sutton, R. S., &amp; Barto, A. G. (2018). <em>Reinforcement Learning: An Introduction</em> (2nd ed.). MIT Press.</li>
+                <li id="cite7">van der Aalst, W. M. P. (2018). <em>Robotic Process Automation</em>. Springer.</li>
+                <li id="cite8">Siciliano, B., &amp; Khatib, O. (Eds.). (2016). <em>Springer Handbook of Robotics</em> (2nd ed.). Springer.</li>
+                <li id="cite9">Fielding, R. T. (2000). Architectural Styles and the Design of Network-based Software Architectures. Doctoral dissertation, UC Irvine.</li>
+                <li id="cite10">LangChain. (2024). <a href="https://python.langchain.com/" target="_blank">https://python.langchain.com/</a></li>
+                <li id="cite11">CrewAI. (2024). <a href="https://crewai.com/" target="_blank">https://crewai.com/</a></li>
+            </ol>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Pavlos Andreadis. All rights reserved.</p>
+    </footer>
+    <div style="max-width: 900px; margin: 2rem auto 2.5rem auto;">
+        <div style="background: #fff3cd; border: 1.5px solid #ffe082; color: #856404; border-radius: 10px; padding: 1.2rem 1.5rem; font-size: 1.05em; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-top: 2.5rem;">
+            <strong>Disclaimer:</strong> This page was written by an Agentic AI system to the specifications of the user, forwarded by the user for review by an external LLM, with proposed suggestions fed back to the Agentic AI system for modification. Concepts and references have been briefly checked by the user but are provided as is and without guarantees. Future versions will employ a more careful scholarly practice :)
+        </div>
+    </div>
+</body>
+</html> 
