@@ -153,7 +153,7 @@
                     <p>Explore my work in AI, education, and collaborative research.</p>
                 </section>
             </div>
-            <img src="src/assets/img/Lighthouse_00.png" alt="Lighthouse" style="position: absolute; right: 0; top: 0; bottom: 0; height: 100%; width: auto; object-fit: contain; object-position: right center; opacity: 0.5; z-index: -2;">
+            <img id="lighthouse-img" src="src/assets/img/Lighthouse_00.png" alt="Lighthouse" style="position: absolute; right: 0; top: 0; bottom: 0; height: 100%; width: auto; object-fit: contain; object-position: right center; opacity: 0.5; z-index: -2; transition: opacity 0.3s, filter 0.3s, z-index 0s;">
         </div>
         
         <!-- Bottom Banner -->
@@ -517,6 +517,30 @@
                         }
                     }
                 }, 500);
+            }
+        });
+
+        // Lighthouse GIF swap logic: show GIF in foreground, then restore static image and original style
+        document.addEventListener('DOMContentLoaded', function() {
+            var lighthouseImg = document.getElementById('lighthouse-img');
+            if (lighthouseImg) {
+                // Save original styles
+                var originalSrc = 'src/assets/img/Lighthouse_00.png';
+                var originalOpacity = '0.5';
+                var originalZ = '-2';
+                var originalFilter = '';
+                // Show GIF in foreground, fully opaque, no blur
+                lighthouseImg.src = 'src/assets/img/Lighthouse.gif';
+                lighthouseImg.style.opacity = '1';
+                lighthouseImg.style.zIndex = '2';
+                lighthouseImg.style.filter = 'none';
+                setTimeout(function() {
+                    // Restore static image and original style
+                    lighthouseImg.src = originalSrc;
+                    lighthouseImg.style.opacity = originalOpacity;
+                    lighthouseImg.style.zIndex = originalZ;
+                    lighthouseImg.style.filter = originalFilter;
+                }, 400); // 4 frames x 100ms
             }
         });
     </script>
